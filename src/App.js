@@ -1,6 +1,14 @@
 import React from "react";
 import "./App.css";
 import Card from "./components/Card";
+import { Menu, Button } from "antd";
+import {
+  StarOutlined,
+  EditOutlined,
+  AppstoreOutlined,
+  GlobalOutlined,
+} from "@ant-design/icons";
+import MenuItem from "antd/lib/menu/MenuItem";
 
 const restaurants = [
   {
@@ -37,14 +45,53 @@ const restaurants = [
 
 function App() {
   return (
-    <div className="App">
-      {restaurants.map((restaurant) => (
-        <Card
-          name={restaurant.name}
-          description={restaurant.description}
-          coverArt={restaurant.coverArt}
-        ></Card>
-      ))}
+    <div>
+      <div>
+        <Menu mode="horizontal" defaultSelectedKeys={["edit"]}>
+          <MenuItem>Food Review App!</MenuItem>
+          <Menu.Item key="edit" icon={<EditOutlined />}>
+            Create New Review
+          </Menu.Item>
+          <Menu.Item key="star" icon={<StarOutlined />}>
+            My Reviews
+          </Menu.Item>
+          <Menu.SubMenu
+            key="SubMenu"
+            title="Explore Reviews"
+            icon={<GlobalOutlined />}
+          >
+            <Menu.Item key="two" icon={<AppstoreOutlined />}>
+              Navigation Two
+            </Menu.Item>
+            <Menu.Item key="three" icon={<AppstoreOutlined />}>
+              Navigation Three
+            </Menu.Item>
+            <Menu.ItemGroup title="Item Group">
+              <Menu.Item key="four" icon={<AppstoreOutlined />}>
+                Navigation Four
+              </Menu.Item>
+              <Menu.Item key="five" icon={<AppstoreOutlined />}>
+                Navigation Five
+              </Menu.Item>
+            </Menu.ItemGroup>
+          </Menu.SubMenu>
+          <MenuItem style={{ marginLeft: "auto" }}>
+            <Button type="primary">Sign In</Button>
+          </MenuItem>
+          <MenuItem>
+            <Button type="primary">Create Account</Button>
+          </MenuItem>
+        </Menu>
+      </div>
+      <div className="App">
+        {restaurants.map((restaurant) => (
+          <Card
+            name={restaurant.name}
+            description={restaurant.description}
+            coverArt={restaurant.coverArt}
+          />
+        ))}
+      </div>
     </div>
   );
 }
