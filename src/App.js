@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import Card from "./components/Card";
-import { Menu, Button } from "antd";
+import { Menu, Button, Carousel } from "antd";
 import {
   StarOutlined,
   EditOutlined,
@@ -9,6 +9,18 @@ import {
   GlobalOutlined,
 } from "@ant-design/icons";
 import MenuItem from "antd/lib/menu/MenuItem";
+
+const contentStyle = {
+  height: "500px",
+  width: "1350px",
+  color: "#fff",
+  lineHeight: "160px",
+  textAlign: "center",
+  background: "#364d79",
+};
+const onChange = (currentSlide) => {
+  console.log(currentSlide);
+};
 
 const restaurants = [
   {
@@ -48,7 +60,7 @@ function App() {
     <div>
       <div>
         <Menu mode="horizontal" defaultSelectedKeys={["edit"]}>
-          <MenuItem>Food Review App!</MenuItem>
+          <img style={{height: "50px", width: "100px"}} src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAACoCAMAAABt9SM9AAAA/1BMVEX///8AAAD+Ghm5ubnm5uY1NTX+GhoWFhb//v/8AADpAADz8/P9//4YGBjtAADvAAApKSnIyMjs7Oz19fX4AAC2trbZ2dnCwsKMjIzn5+cLCws8PDzQ0NDe3t6urq6QkJBISEh+fn7/8O+goKBmZmaYmJhaWlr/+PdycnKEhIQgICCdnZ3/7ez0U1ZMTEx3d3f+4eFdXV3729n7vLn8hIX7Ojn4i4z4S0vvm5r80M/1a2zzxMTtfXzpTk7tWFjrkI/nEhTlP0DnbGrigYDfkZHlW1vlpqbtOzvqIyDyUEz4paP4sK72ZGPllJf6ZGH5mprmLzDmRUbssLD7KSj9fHy/ROmDAAAKbElEQVR4nO2cC1vaShPHISgmEIlAROWiCCheUCnWO1qqp0eqfWur5/t/ljf3nb0kQZoE7DO/5zyndTeE3X8ns7MzG1MpBEEQBEEQBEEQBEEQBEEQBEEQBEEQBEEQBEEQBEEQBEEQBEGQD4o66wF8EFr9wWDQb816GPOO2u2ffv55llUURTr7fDXr4cwvxnM3OL+QFEWXbBTtEh9GH+Sra12xVMpKzh+Fm1kPak7pDh2pILezHtV80r3TOakkKded9bjmki+aQCsp15/1uOYQtTvKCsXCBVFAPyfSSiqgWAJaPmLhcsijyo/CxxDFEiCn/id08PgYChE7rcJg1uOaT+5FppVDsXjklCo0rVxv1iObU4YC08r9NXmacrS3640EYv0d2x25XVtZ6VSivOUlb1q5KO8/MxoraYudCO/Z/cqJNYrw9rPD0SqdXovwpjcFVqxfEd59ZqymPaK7qSrfsQ/iRXR3nx27RKzo3JaqDtjw4a9I/i0SsTLR3VVOPWgStUe8Y65Q1ZRq/u9DEY9YfPhwz15wc3R2dBrlNyZAXGKlniivpT1QnXL3XtMlXb/vfijbik0smQoftH9Al+rl6XXO4Oaa2MSiwwftX9Cj9r7qxOI+kG3FJpaa+qYJxTLs6tHRylgCCq+Rfmu8xGdZVGJLI5qovUdSK8tK49bHMa0YxUp90bzoQXOzyqraeqTqiozrj47SWqbu31tfXW0IP1XPrK5m1sQx52RiLRSNW6xV5HeNNtUae5KQFHzvkQopsnFVFE/MKa34yNU4MHt32WxLZYfIcbya5z4mEmvB+KLqvndtY93bP+6+z/qePa/lpOBl4q9iNq2aM+K2qDPjdC5BPcqHB2maPda+BGJtOj8XrZ+KTfoOPtkJoeORb11FXPPpcVpJ2VH3nRY7AVveeAUPVMnr7JDGzbSAE9r2eLEqXkPJmG6Hv4PQtFW1m7d2L9TEBznHa9m5P7n7lT8HkdViqJKR0S7xnWA/7I42v8vP04LKxfBiEUs6SVWWRTdYF4yu/11XpKMn1v+4xYuxbArZ+i2qZcTwHFbAaLkHsQ46HSefF86Tmywnlgxv5XODDvP1hisamyajK8rjMxUK9HK28Vixp8iuTG4Ze4xWLC71dMyJlV/y1Sqd3g4QayHgcx577ACGrgy6oh89t4gPGxQUSVLGPaOl9VuXhNXqb5FHWiU42FW6b4MXciUdBLGt6cRKb9ED6ML0laHXD5JP6F9r+rBnJmS+ie3KiO6jd/DU9OmuLdDTtFr2QibrOekpxWK8PJtGVpSseejW9Piu1civwrK+oe1d9FrRaxvltaCbSW+aLWv0zJZ295gAwFN7IrEO+M8fUGPjzjdkJUV/O6cKq79FQimK9hSDVnA5TNOmtcN1VGHLzobVVtmHja7bChdrebMs+Dz9zyWs2EuKdjcwE/LWJeqY7VV06edLXIdrfE0Ltq+zV4KVKw/NIz+hWGDpLNVgBxzahfABy0p64dm7xk5CZLNmsyHU2edT0/BiyyxTYyWxJfXMlcwW8DPtiUGI6YgQJha9v/kEeuAiIz6TZTZ6Oz91ULAaFMOf/Xi6iT1FSi2IRAUYN1h2BNRj13igt90QItYm83nwXceg+ZdQLBOQyLoZmQZ1fmoFFvHXKiiv4fpFKnK0giyyFFbZOwC97a1fsFhs9JnKg06wb3r008oTSzYVGlypyRV0qGXP3dGegLZPVou/YcAow34Og8UqBXwePqH+YrGnlOXkUn0ZOBPbRZdhU51p4VdlYoc16+dAsT7xIwA3B+7wztew7iPfykwOXM/2rRa48tnzL5KGgyUWkLOxLg4UizdM6LWapPFBEDqYS97bk3eJrKo3l0+9JOuqcMdsmxbMWNluSJiZEWBdHCiWKPHa9nqXSeMrqD87S97b0bkZG6jWYcCU+TbBrSnfjyQP4sLF2/Q6MG6osdP5U7FEA8iIurtjTyw7hnruu8kt1cT8y4O1NdT1o0Fi1kWFD3k6bnASVROKZa907xZrTdAtG5tDxdJJeTOC8l6K7AlPL7RHKzBVzxzD0/XrQVLFwnUwmX1qam5OcEKx7GcsGstKpQbDi7OL89M+I8MXzbAn7dL8K1kxFe06odeeqNWP2ha67ngyn+UE4IFiiQpC5J+C2kurzn/UI+ZmGkZmvE4WgWxW0YbJnF6GhgNzM14ASh6U6lLVYtnlYMViselsrqdYDcke4FjQSzNwMjdmbQce2TL2h4p2nkh11ScH6m2tgVsLv1mgWAI5wM1DT6G2frnR1qtVzgdxhbGfVgqXrfhjVHCyEUIuCDYNmuAIno8dwI4r9BCql7ixi/f9HJNV1kfP8QeswpQxSKWQ3MJS6An3YLE40wpz/wQVlFidYtdQY/fb+veruG2LikxdwL8RWLC42RYP21RGOCTrwOTaZXA5t8mmgT7KFktusS+5Zq2VMma1BBVBqpYH2ql6/oa9IByD/XFYPot6kMuCqM6PLthcuycdRK9PF15jFquS5qBOMcDgoUodYbBZIZeGZkr3iNp1+PwLKr0U9zovVpdNLZv8ittvcUV1JslHLZjNw3qjUW/DjRLJrkxQsNhZKMspuVykK0YhR0ReYb0nd2VbjxF3Zbk0YS5usUrshJjEU5HtZ+fvXTlRdad6fFxjmnaDB0i/RkdOFX2VuDpr7JZFbXrSggox089Cyh3T1g35tCCk+1uCqpCXDfn3VLQvkYniR5keOr8vEZx+AWx4100pVoh3f6CDBPCyIVc0GyfwIuIhHHpTcMEnv3mm3bShRaBYfudwwoJd1n5ybi1HltnXXLVEDuDCsQtPTG37agX9DfBFtrVQYaePWiFatdhFLwcKXw/0idLhHwsxAdDF18SXbFbFU92DHhVIumA10DH6fpqnWgwcmWrokfUXi3pPRb9L5BULaDd+gy+Jplqj3Q0J2Zp2A7OhKbLLYPok2LdbL5QzYo1h4obsggytEsk8wCktBly2T+8jD3Y5z+xFqhv8na2GTSjX0gTvB/+js/EBfDNTlW81t4p/ncyL03ACgU9Fud7u1BbNHFatc1gUGYWdP2y6CQbBVrmy2amtLB8sNk/WNgQ3YFD5Us8j1d+3H0Q9dynHFWLl23u7e21ntnCpC8/BGeF3PiD9sLC6vU6WCJ+8QnmjNOnMXgvsY/idvsCs4yv6UXx1noZzRHS7UZY3qEVqIdovmjwJ44NZ82LCA/bdr/7Lfy9X8f0C0zJZ2Wr0ubLt8A+/iz8Wy1jwvtNqJRCkU2ylfTiI+rGPQCy1+zKCvyIxmcCTwJ5S9Ah4l2c6IhDLdOLDN++3lCb+e2j8Dh8fRv5NkYhluKPe8483szqtKKOkX4U+EWt1Ev03RSOWVbbvXb389/P6hS28xo4w7R6WBp+KUkRigUJE4m9finYuUS+ENuT+K+EXzynbnFbhRcGpOIz7C5JglXbynQl2HtPhbqVCMsfzTT7TcfVqrgtf8I3oe2wjXo/4V5AlTqlSbK+3642Yc/wLma1MxLsoBEEQBEEQBEEQBEEQBEEQBEEQBEEQBEEQBEEQBEEQBEEQBEEQBEmY/wNs+8SRXCJVuwAAAABJRU5ErkJggg=="></img>
           <Menu.Item key="edit" icon={<EditOutlined />}>
             Create New Review
           </Menu.Item>
@@ -83,6 +95,41 @@ function App() {
           </MenuItem>
         </Menu>
       </div>
+
+      <Carousel autoplay afterChange={onChange}>
+        <div>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <img
+              style={contentStyle}
+              src="https://www.westend61.de/images/0000814113pw/two-business-people-having-lunch-in-a-restaurant-SUF00349.jpg"
+            ></img>
+          </div>
+        </div>
+        <div>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <img
+              style={contentStyle}
+              src="https://st.focusedcollection.com/14026668/i/1800/focused_181040042-stock-photo-people-greeting-each-other-business.jpg"
+            ></img>
+          </div>
+        </div>
+        <div>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <img
+              style={contentStyle}
+              src="https://st2.depositphotos.com/1518767/10327/i/950/depositphotos_103274800-stock-photo-waiter-serving-salad-to-business.jpg"
+            ></img>
+          </div>
+        </div>
+        <div>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <img
+              style={contentStyle}
+              src="https://st2.depositphotos.com/1518767/10901/i/950/depositphotos_109010544-stock-photo-concentrated-male-chef-garnishing-food.jpg"
+            ></img>
+          </div>
+        </div>
+      </Carousel>
       <div className="App">
         {restaurants.map((restaurant) => (
           <Card
