@@ -1,25 +1,18 @@
 from flask import Flask, request
-from flask_sqlalchemy import SQLAlchemy
+from database import db
 from sqlalchemy import create_engine
 import csv
+from Models.User import User
+from Models.Reviews import Reviews
 
 app = Flask(__name__)
-db = SQLAlchemy()
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/yelp-clone'
 db.init_app(app)
 
 
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    username = db.Column(db.String, unique=True, nullable=False)
-    password = db.Column(db.String)
 
-class Reviews(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    business_name = db.Column(db.String)
-    description = db.Column(db.String)
-    image_link = db.Column(db.String)
-    rating = db.Column(db.Integer)
+
+
 
 with app.app_context():
     db.create_all()
